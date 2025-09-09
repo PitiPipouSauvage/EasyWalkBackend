@@ -32,12 +32,12 @@ class User
 
     public function createUser($username, $password): void {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = databaseConnexion::getPdo()->prepare("INSERT INTO users (username, password) VALUES (:username, :password)", [
+        $stmt = databaseConnexion::getPdo()->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+
+        $stmt->execute([
             ":username" => $username,
             ":password" => $hashedPassword
         ]);
-
-        $stmt->execute();
     }
 
     public function userExists($username): bool {
@@ -48,25 +48,25 @@ class User
 
     public function addFriend($username, $friendUsername): void {
         if (self::userExists($username) && self::userExists($friendUsername)) {
-            $stmt = databaseConnexion::getPdo()->prepare("INSERT INTO BEFRIENDS (username1, username2) VALUES (:username1, :username2)", [
+            $stmt = databaseConnexion::getPdo()->prepare("INSERT INTO BEFRIENDS (username1, username2) VALUES (:username1, :username2)");
+
+            $stmt->execute([
                 ":username1" => $username,
                 ":username2" => $friendUsername
             ]);
-
-            $stmt->execute();
         }
     }
 
     public function rateUser($username, $rating, $description, $rated): void {
         if (self::userExists($username) && self::userExists($rated)) {
-            $stmt = databaseConnexion::getPdo()->prepare("INSERT INTO RATE VALUES(:username, :rating, :description, :rated)", [
+            $stmt = databaseConnexion::getPdo()->prepare("INSERT INTO RATE VALUES(:username, :rating, :description, :rated)");
+
+            $stmt->execute([
                 ":username" => $username,
                 ":rated" => $rated,
                 ":rating" => $rating,
                 ":description" => $description
             ]);
-
-            $stmt->execute();
         }
     }
 }

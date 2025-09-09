@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class UserTests extends TestCase
+class UserTest extends TestCase
 {
     public function testCreateUser() {
         $user = User::getInstance();
