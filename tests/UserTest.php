@@ -2,6 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once "src/models/User.php";
+
 class UserTest extends TestCase
 {
     public function testCreateUser() {
