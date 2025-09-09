@@ -1,5 +1,5 @@
 <?php
-require_once "databaseDatabaseConnexion.php";
+require_once "databaseConnexion.php";
 
 class databaseConnexion {
     private static ?databaseConnexion $instance = null;
