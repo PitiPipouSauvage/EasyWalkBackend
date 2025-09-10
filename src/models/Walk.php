@@ -16,15 +16,14 @@ class Walk
 
     public function addWalk(string $username, $steps, $walkDate, $points, $distance) {
         if (User::getInstance()->userExists($username)) {
-            $stmt = databaseConnexion::getPdo()->prepare("INSERT INTO WALKS (nbSteps, points, distance, walkDate, username) VALUES (:nbSteps, :points, :distance, :walkDate, :username)", [
+            $stmt = databaseConnexion::getPdo()->prepare("INSERT INTO WALKS (nbSteps, points, distance, walkDate, username) VALUES (:nbSteps, :points, :distance, :walkDate, :username)");
+            $stmt->execute([
                 'nbSteps' => $steps,
                 'points' => $points,
                 'distance' => $distance,
                 'walkDate' => date($walkDate),
                 'username' => $username
             ]);
-
-            $stmt->execute();
         }
     }
 }

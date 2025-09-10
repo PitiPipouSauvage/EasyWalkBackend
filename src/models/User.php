@@ -17,12 +17,12 @@ class User
 
     public function verify($username, $password): bool {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM USERS WHERE username = :username AND password = :password", [
+        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM USERS WHERE username = :username AND password = :password");
+
+        $stmt->execute([
             ":username" => $username,
             ":password" => $hashedPassword
         ]);
-
-        $stmt->execute();
         if ($stmt->rowCount() > 0) {
             return true;
         } else {
