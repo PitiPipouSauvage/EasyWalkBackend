@@ -8,8 +8,8 @@ class databaseConfiguration
         self::$databaseConfiguration["hostname"] = getenv("DB_HOSTNAME");
         self::$databaseConfiguration["dbName"] = getenv("DB_NAME");
         self::$databaseConfiguration["dbPort"] = getenv("DB_PORT");
-        self::$databaseConfiguration["login"] = getenv("DB_USER");
-        self::$databaseConfiguration["password"] = getenv("DB_PASS");
+        self::$databaseConfiguration["login"] = getenv("DB_LOGIN");
+        self::$databaseConfiguration["password"] = getenv("DB_PASSWORD");
     }
 
     static public function getDatabaseConfiguration(): array {
