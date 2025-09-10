@@ -34,7 +34,7 @@ class Router
 
     private function callAction($action, array $params) {
         list($controllerName, $method) = explode('@', $action);
-        require_once $controllerName . '.php';
+        require_once 'controllers/' . $controllerName . '.php';
         $controller = new $controllerName();
         return call_user_func_array([$controller, $method], $params);
     }
