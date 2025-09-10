@@ -17,7 +17,7 @@ class User
 
     public function verify($username, $password): bool {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM users WHERE username = :username AND password = :password", [
+        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM USERS WHERE username = :username AND password = :password", [
             ":username" => $username,
             ":password" => $hashedPassword
         ]);
@@ -32,7 +32,7 @@ class User
 
     public function createUser($username, $password): void {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = databaseConnexion::getPdo()->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+        $stmt = databaseConnexion::getPdo()->prepare("INSERT INTO USERS (username, password) VALUES (:username, :password)");
 
         $stmt->execute([
             ":username" => $username,
@@ -41,7 +41,7 @@ class User
     }
 
     public function userExists($username): bool {
-        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM users WHERE username = :username", [":username" => $username]);
+        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM USERS WHERE username = :username", [":username" => $username]);
         $stmt->execute();
         return $stmt->rowCount() > 0;
     }
