@@ -10,9 +10,25 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_pass
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -u root -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     strategy:
       matrix:
-        php: [ '8.2' ]
+        php: [ '8.3' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -20,11 +36,17 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.3
+          php-version: ${{ matrix.php }}
           extensions: mbstring, pdo_mysql
 
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist
 
       - name: Run PHPUnit
+        env:
+          DB_HOSTNAME: 127.0.0.1
+          DB_PORT: 3306
+          DB_NAME: test_db
+          DB_LOGIN: test_user
+          DB_PASSWORD: test_pass
         run: vendor/bin/phpunit

@@ -10,8 +10,6 @@ class databaseConfiguration
         self::$databaseConfiguration["dbPort"] = getenv("DB_PORT");
         self::$databaseConfiguration["login"] = getenv("DB_LOGIN");
         self::$databaseConfiguration["password"] = getenv("DB_PASSWORD");
-
-        var_dump(self::$databaseConfiguration);
     }
 
     static public function getDatabaseConfiguration(): array {
