@@ -25,7 +25,7 @@ class UserController extends Controller
     }
 
     public function create($username, $password) {
-        if ($username === "helloKitty") {
+        if ($username === "helloKitty" || $username === "dora") {
             $this->json_error("Protected username");
         }
 
