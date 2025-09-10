@@ -4,6 +4,7 @@ use PHPUnit\Framework\TestCase;
 
 require_once "src/models/User.php";
 require_once "src/config/databaseConnexion.php";
+require_once "Utils.php";
 
 class UserTest extends TestCase
 {
