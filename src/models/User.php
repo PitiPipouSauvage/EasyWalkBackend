@@ -41,8 +41,8 @@ class User
     }
 
     public function userExists($username): bool {
-        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM USERS WHERE username = :username", [":username" => $username]);
-        $stmt->execute();
+        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM USERS WHERE username = :username");
+        $stmt->execute([":username" => $username]);
         return $stmt->rowCount() > 0;
     }
 
