@@ -20,7 +20,7 @@ class User
 
          $stmt->execute([":username" => $username,]);
 
-        return password_verify($password, $stmt->fetchColumn("password"));
+        return password_verify($password, $stmt->fetch()["password"]);
     }
 
     public function createUser($username, $password): void {

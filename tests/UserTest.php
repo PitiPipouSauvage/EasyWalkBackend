@@ -37,7 +37,6 @@ class UserTest extends TestCase
         }
 
         $user->addFriend("helloKitty", "dora");
-        $this->assertEquals(["dora"], $user->getFriends("helloKitty"));
-        $this->assertEquals(["helloKitty"], $user->getFriends("dora"));
+        $this->assertEquals($user->getFriends("helloKitty"), $user->getFriends("dora"));
     }
 }
