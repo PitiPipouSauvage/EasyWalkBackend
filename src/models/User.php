@@ -69,4 +69,24 @@ class User
             ]);
         }
     }
+
+    public function all() {
+        $stmt = databaseConnexion::getPdo()->query("SELECT * FROM USERS");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get($username) {
+        $stmt = databaseConnexion::getPdo()->query("SELECT username, nbSteps, nbStepsWithFriends, points FROM USERS WHERE username = :username");
+        $stmt->execute(["username" => $username]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getFriends($username) {
+        if (self::userExists($username)) {
+            $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM BEFRIENDS WHERE username1 = :username");
+            $stmt->execute(["username" => $username]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return [];
+    }
 }
