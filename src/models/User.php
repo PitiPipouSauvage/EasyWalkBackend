@@ -19,15 +19,11 @@ class User
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM USERS WHERE username = :username AND password = :password");
 
-        $stmt->execute([
+         $stmt->execute([
             ":username" => $username,
             ":password" => $hashedPassword
         ]);
-        if ($stmt->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return $stmt->fetch();
     }
 
     public function createUser($username, $password): void {
