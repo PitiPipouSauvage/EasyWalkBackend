@@ -1,7 +1,7 @@
 <?php
 
-use core\Controller;
 
+require_once "src/core/Controller.php";
 require_once "src/models/User.php";
 
 class UserController extends Controller

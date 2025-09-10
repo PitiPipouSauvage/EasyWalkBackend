@@ -1,7 +1,5 @@
 <?php
 
-namespace core;
-
 class Controller
 {
     protected function json_response(array $data, int $status = 200) {
