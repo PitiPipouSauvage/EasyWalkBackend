@@ -16,7 +16,7 @@ class Router
 
     public function addRoute($method, $path, $action) {
         $pattern = preg_replace('#\{\w+}#', '([\w-]+)', $path);
-        $pattern = "#^" . $pattern . "$#";
+        $pattern = "#^" . $pattern . "/?$#";
         $this->routes[] = compact('method', 'pattern', 'action');
     }
 
