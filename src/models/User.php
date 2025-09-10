@@ -76,7 +76,7 @@ class User
 
     public function getFriends($username) {
         if (self::userExists($username)) {
-            $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM BEFRIENDS WHERE username1 = :username");
+            $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM BEFRIENDS WHERE username1 = :username OR username2 = :username");
             $stmt->execute(["username" => $username]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
