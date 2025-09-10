@@ -23,6 +23,8 @@ class User
             ":username" => $username,
             ":password" => $hashedPassword
         ]);
+        var_dump($stmt->rowCount());
+        var_dump($stmt->fetchAll(PDO::FETCH_ASSOC));
         return $stmt->fetch();
     }
 
