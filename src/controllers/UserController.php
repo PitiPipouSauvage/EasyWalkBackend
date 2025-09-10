@@ -25,6 +25,10 @@ class UserController extends Controller
     }
 
     public function create($username, $password) {
+        if ($username === "helloKitty") {
+            $this->json_error("Protected username");
+        }
+
         if (!User::getInstance()->userExists($username)) {
             User::getInstance()->createUser($username, $password);
         } else {
