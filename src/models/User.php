@@ -16,16 +16,11 @@ class User
     }
 
     public function verify($username, $password): bool {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM USERS WHERE username = :username AND password = :password");
+        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM USERS WHERE username = :username");
 
-         $stmt->execute([
-            ":username" => $username,
-            ":password" => $hashedPassword
-        ]);
-        var_dump($stmt->rowCount());
-        var_dump($stmt->fetchAll(PDO::FETCH_ASSOC));
-        return $stmt->fetch();
+         $stmt->execute([":username" => $username,]);
+
+        return password_verify($password, $stmt->fetchColumn("password"));
     }
 
     public function createUser($username, $password): void {
