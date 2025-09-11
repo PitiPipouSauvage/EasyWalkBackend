@@ -26,4 +26,28 @@ class Medal
             ]);
         }
     }
+
+    public function index() {
+        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM MEDALS");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get($medalId) {
+        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM MEDALS WHERE medalId = :medalId");
+        $stmt->execute([":medalId" => $medalId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function listMedals($username) {
+        $stmt = databaseConnexion::getPdo()->prepare("
+            SELECT G.medalId 
+            FROM GRANTMEDAL G
+            JOIN MEDALS M ON G.medalId = M.medalId
+            WHERE username = :username
+        ");
+
+        $stmt->execute([":username" => $username]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

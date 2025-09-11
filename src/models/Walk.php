@@ -26,4 +26,14 @@ class Walk
             ]);
         }
     }
+
+    public function getWalks($username, $ammount) {
+        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM WALKS WHERE username = :username LIMIT :ammount");
+        $stmt->execute([
+            "username" => $username,
+            "ammount" => $ammount]
+        );
+
+        return $stmt->fetchAll();
+    }
 }
