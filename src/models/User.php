@@ -1,5 +1,7 @@
 <?php
 
+require_once "config/databaseConnexion.php";
+
 class User
 {
     private static User $_instance;
@@ -16,11 +18,10 @@ class User
     }
 
     public function verify($username, $password): bool {
-        $stmt = databaseConnexion::getPdo()->prepare("SELECT * FROM USERS WHERE username = :username");
-
-         $stmt->execute([":username" => $username,]);
-
-        return password_verify($password, $stmt->fetch()["password"]);
+        $stmt = databaseConnexion::getPdo()->prepare("SELECT password FROM USERS WHERE username = :username");
+        $stmt->execute([":username" => $username,]);
+        $hash = $stmt->fetch();
+        return password_verify($password, $hash[0]);
     }
 
     public function createUser($username, $password): void {
@@ -69,7 +70,7 @@ class User
     }
 
     public function get($username) {
-        $stmt = databaseConnexion::getPdo()->query("SELECT username, nbSteps, nbStepsWithFriends, points FROM USERS WHERE username = :username");
+        $stmt = databaseConnexion::getPdo()->prepare("SELECT username, nbSteps, nbStepsWithFriends, points FROM USERS WHERE username = :username");
         $stmt->execute(["username" => $username]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

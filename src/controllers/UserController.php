@@ -1,8 +1,7 @@
 <?php
 
-
-require_once "src/core/Controller.php";
-require_once "src/models/User.php";
+require_once "core/Controller.php";
+require_once "models/User.php";
 
 class UserController extends Controller
 {
@@ -17,6 +16,24 @@ class UserController extends Controller
         $this->json_response(User::getInstance()->get($username));
     }
 
+    public function login() {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $username = $data['username'] ?? null;
+        $password = $data['password'] ?? null;
+
+        if (!User::getInstance()->userExists($username)) {
+            $this->json_error("User doesn't exist");
+        }
+
+        if (User::getInstance()->verify($username, $password)) {
+            $this->json_response([
+                "authenticated" => true
+            ]);
+        } else {
+            $this->json_error("Wrong password");
+        }
+    }
+
     public function getFriends($username) {
         if (!User::getInstance()->userExists($username)) {
             $this->json_error("User doesn't exist");
@@ -24,7 +41,11 @@ class UserController extends Controller
         $this->json_response(User::getInstance()->getFriends($username));
     }
 
-    public function create($username, $password) {
+    public function create() {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $username = $data['username'] ?? null;
+        $password = $data['password'] ?? null;
+
         if ($username === "helloKitty" || $username === "dora") {
             $this->json_error("Protected username");
         }
